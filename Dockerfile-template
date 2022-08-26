@@ -1,0 +1,46 @@
+FROM kalilinux/kali-rolling
+
+# installing prerequisite to use kali https repository
+RUN apt update -q --fix-missing
+RUN apt upgrade -y
+RUN apt install -y --no-install-recommends ca-certificates
+
+# change repository to https
+RUN echo "deb https://kali.download/kali kali-rolling main contrib non-free" > /etc/apt/sources.list
+RUN apt update -q --fix-missing
+
+# install packages that we must have installed
+RUN apt install -y --no-install-recommends sudo wget curl dbus-x11 xinit kali-desktop-xfce \ 
+    kali-linux-core tigervnc-standalone-server tigervnc-tools
+
+# create new account
+RUN useradd -m -s /bin/zsh -G sudo kali
+RUN echo 'kali:kali' | chpasswd
+
+# change ssh port to 2022
+RUN echo "Port 2022" >> /etc/ssh/sshd_config
+
+# make startup scripts
+RUN echo "#!/bin/bash" > /startup.sh
+RUN echo "/etc/init.d/ssh start" >> /startup.sh
+RUN chmod 755 /startup.sh
+
+# vnc config
+RUN echo "/usr/libexec/tigervncsession-start :8" >> /startup.sh; \
+    echo "echo -e 'kali' | vncpasswd -f >/home/kali/.vnc/passwd" >> /startup.sh; \
+    echo "while true; do sudo -u kali vncserver -fg -v ; done" >> /startup.sh; \
+    echo ":8=kali" >> /etc/tigervnc/vncserver.users; \
+    echo '$localhost = "no";' >>/etc/tigervnc/vncserver-config-mandatory; \
+    echo '$SecurityTypes = "VncAuth";' >> /etc/tigervnc/vncserver-config-mandatory; \
+    mkdir -p /home/kali/.vnc; \
+    chown kali:kali /home/kali/.vnc; \
+    touch /home/kali/.vnc/passwd; \
+    chown kali:kali /home/kali/.vnc/passwd; \
+    chmod 600 /home/kali/.vnc/passwd; \
+    echo "/bin/bash" >> /startup.sh
+
+# ssh and vnc port
+EXPOSE 2022 5908
+WORKDIR "/root"
+ENTRYPOINT ["/bin/zsh"]
+# CMD ["/startup.sh"] should be called if you want to start vnc server
