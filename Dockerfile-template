@@ -11,7 +11,8 @@ RUN apt update -q --fix-missing
 
 # install packages that we must have installed
 RUN apt install -y --no-install-recommends sudo wget curl dbus-x11 xinit kali-desktop-xfce \ 
-    kali-linux-core tigervnc-standalone-server tigervnc-tools
+    kali-linux-core tigervnc-standalone-server tigervnc-tools \
+    # packages.txt customization >>>
 
 # create new account
 RUN useradd -m -s /bin/zsh -G sudo kali
