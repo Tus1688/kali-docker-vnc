@@ -26,7 +26,7 @@ tool3
 5. Build docker image by running `python3 build.py`
 6. Run it, `python3 run.py` for cli only or `python3 vnc-run.py` to start with vnc and ssh
 7. Profits 🤑
-8. If you use kill choose vnc then you can kill your container with `python3 kill-container.py`
+8. If you use vnc then you can kill your container with `python3 kill-container.py`
 
 # Disclaimer 
 Usage of this tool for attacking targets without prior mutual consent is illegal. It is the end user’s responsibility to obey all applicable local, state and federal laws. We assume no liability and are not responsible for any misuse or damage caused by this tool.
