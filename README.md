@@ -3,8 +3,8 @@ easily build & run kali linux on docker while utilizing the power of vnc
 
 # Features:
 The only persistent is `/home/kali`. Let's say you got pwned by malicious script, 
-that successfully escalate to root and manage to create super sneaky persistent in `/root`, modifying `/etc/hosts`,
-install something in `/usr/bin`. **It won't be happen here**, as everything except `/home/kali`
+that successfully escalates to root and manages to create super sneaky persistence in `/root`, modifying `/etc/hosts`,
+installing something in `/usr/bin`. Luckily, **It won't be happen here**, as everything except `/home/kali`
 will be **disposed** following shutdown.
 However, it's **still possible to add malicious hooks in `/home/kali`** for example `.zshrc` or `.profile`, which will be run everytime you open zsh, and surely
 many others places.
