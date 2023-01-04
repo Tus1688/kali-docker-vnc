@@ -3,7 +3,7 @@ FROM kalilinux/kali-rolling
 # installing prerequisite to use kali https repository
 RUN apt update -q --fix-missing
 RUN apt upgrade -y
-RUN apt install -y --no-install-recommends ca-certificates
+RUN apt install -y --no-install-recommends ca-certificates apt-transport-https
 
 # change repository to https
 RUN echo "deb https://kali.download/kali kali-rolling main contrib non-free" > /etc/apt/sources.list
@@ -11,8 +11,7 @@ RUN apt update -q --fix-missing
 
 # install packages that we must have installed
 RUN apt install -y --no-install-recommends sudo wget curl dbus-x11 xinit kali-desktop-xfce \ 
-    kali-linux-core tigervnc-standalone-server tigervnc-tools \
-    # packages.txt customization >>>
+    kali-linux-core tigervnc-standalone-server tigervnc-tools 
 
 # create new account
 RUN useradd -m -s /bin/zsh -G sudo kali
@@ -39,6 +38,10 @@ RUN echo "/usr/libexec/tigervncsession-start :8" >> /startup.sh; \
     chown kali:kali /home/kali/.vnc/passwd; \
     chmod 600 /home/kali/.vnc/passwd; \
     echo "/bin/bash" >> /startup.sh
+
+# install package.txt customization
+RUN apt install -y --no-install-recommends \
+    # packages.txt customization >>>
 
 # ssh and vnc port
 EXPOSE 2022 5908

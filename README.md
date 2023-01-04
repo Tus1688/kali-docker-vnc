@@ -1,6 +1,8 @@
 # kali-docker-vnc
 easily build & run kali linux on docker while utilizing the power of vnc
 
+![kali-docker-vnc](./kali-docker-vnc.png)
+
 # Features:
 The only persistent is `/home/kali`. Let's say you got pwned by malicious script, 
 that successfully escalate to root and manage to create super sneaky persistent in `/root`, modifying `/etc/hosts`,
@@ -10,7 +12,7 @@ However, it's **still possible to add malicious hooks in `/home/kali`** for exam
 many others places.
 
 # Important notes:
-`kali_data` is docker volume that will be binded upon container creation, your customization will be kept there. If you thing your `/home/kali` is compromised,
+`kali_data` is docker volume that will be binded upon container creation, your customization will be kept there. If you think your `/home/kali` is compromised,
 just delete `kali_data`.
 
 # How to use:
